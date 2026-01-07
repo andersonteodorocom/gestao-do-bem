@@ -7,7 +7,14 @@ async function bootstrap() {
   
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe()); // <-- Adicione esta linha
-  app.enableCors()
+  
+  // Enable CORS with specific configuration
+  app.enableCors({
+    origin: true, // Allow all origins in development/testing
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Gestão do Bem API')
